@@ -1,8 +1,12 @@
-import Vue from 'nativescript-vue'
-import App from './components/App'
+import Vue from 'nativescript-vue';
 import store from './store';
+import routes from "./routes";
+import BackendService from "./services/backend_service";
 
-import VueDevtools from 'nativescript-vue-devtools'
+const backendService = new BackendService();
+Vue.prototype.$backendService = backendService;
+
+import VueDevtools from 'nativescript-vue-devtools';
 
 if(TNS_ENV !== 'production') {
   Vue.use(VueDevtools)
@@ -12,6 +16,5 @@ Vue.config.silent = (TNS_ENV === 'production')
 
 
 new Vue({
-  store,
-  render: h => h('frame', [h(App)])
-}).$start()
+  render: h => h("frame", [h(backendService.isLoggedIn() ? routes.home : routes.login)])
+}).$start();

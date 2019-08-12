@@ -1,32 +1,33 @@
 <template>
     <Page>
-        <ActionBar title="Welcome to NativeScript-Vue!"/>
-        <GridLayout columns="*" rows="*">
-            <Label class="message" :text="msg" col="0" row="0"/>
-        </GridLayout>
+        <ActionBar title="YOUR APP"></ActionBar>
+
+        <StackLayout>
+            <Label class="body m-20" :text="message" textWrap="true"></Label>
+            <Button class="btn btn-primary" text="Log out" @tap="logout"></Button>
+        </StackLayout>
     </Page>
 </template>
 
-<script >
-  export default {
-    data() {
-      return {
-        msg: 'Hello World!'
-      }
-    }
-  }
+<script>
+    import Login from "./Authentication/login";
+
+    export default {
+        data() {
+            return {
+                message: "You have successfully authenticated. This is where you build your core application functionality."
+            };
+        },
+        methods: {
+            logout() {
+                this.$backendService.logout();
+                this.$navigateTo(Login, {
+                    clearHistory: true
+                });
+            }
+        }
+    };
 </script>
 
-<style scoped>
-    ActionBar {
-        background-color: #53ba82;
-        color: #ffffff;
-    }
-
-    .message {
-        vertical-align: center;
-        text-align: center;
-        font-size: 20;
-        color: #333333;
-    }
+<style>
 </style>
